@@ -1,0 +1,5 @@
+#BlueJ class context
+comment0.target=sqliteConnection
+comment1.params=
+comment1.target=java.sql.Connection\ dbConnector()
+numComments=2

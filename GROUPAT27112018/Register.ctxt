@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Register
+comment1.params=
+comment1.target=Register()
+comment2.params=arg0
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=3

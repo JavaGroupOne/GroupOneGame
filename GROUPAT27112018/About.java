@@ -1,0 +1,51 @@
+import java.awt.BorderLayout;
+import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Desktop;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+
+@SuppressWarnings("serial")
+public class About extends JFrame 
+{
+	public About() 
+	{
+		setResizable(false);
+		setTitle("About Us");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\jara\\Documents\\pic\\About6.png"));
+		JTextArea aboutus = new JTextArea(10, 10);
+		aboutus.setBackground(new Color(204, 255, 255));
+		aboutus.setText("We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.  We the management and staff at GAMBROSIJAC has over our Twenty Five (25) years of creating quiz applications prided ourselves in creating state of the art online platforms for quiz competitions tailored to cater to the emerging needs of various clientele.  The constant evolution of our platform is our way of providing optimized applications guaranteed to meet our clients\u2019 needs. We strongly believe there is no better way of evolving than adding new features to our applications. This application will provide a hands-on experience of our latest quiz site GAMBROSIJAC.  This latest application is useful for quiz competitions that use only multiple choice questions and are not specific to one area of specialization.");	
+		getContentPane().add(aboutus, BorderLayout.CENTER);
+		aboutus.setLineWrap(true);
+		JScrollPane scrollbar = new JScrollPane(aboutus, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		getContentPane().add(scrollbar);
+		
+		JButton btnReadMe = new JButton("Click Here For Readme File");
+		btnReadMe.setForeground(Color.WHITE);
+		btnReadMe.setBackground(Color.RED);
+		btnReadMe.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				try
+				{
+					Desktop.getDesktop().open(new java.io.File("C:\\Users\\jara\\Documents\\pic\\Readme.txt"));
+				}
+				catch (Exception e)
+				{e.printStackTrace();
+				}		
+			}
+		});
+		getContentPane().add(btnReadMe, BorderLayout.SOUTH);
+		JScrollPane scrollPane = new JScrollPane();
+		getContentPane().add(scrollPane, BorderLayout.WEST);
+	}
+}

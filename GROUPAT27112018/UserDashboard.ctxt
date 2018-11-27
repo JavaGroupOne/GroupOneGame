@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=UserDashboard
+comment1.params=
+comment1.target=void\ clock()
+comment2.params=
+comment2.target=void\ run()
+comment3.params=username\ fullname\ mscore\ itscore\ sciscore\ avgscore\ stuid
+comment3.target=UserDashboard(java.lang.String,\ java.lang.String,\ double,\ double,\ double,\ double,\ int)
+comment4.params=e
+comment4.target=void\ mousePressed(java.awt.event.MouseEvent)
+comment5.params=e
+comment5.target=void\ mousePressed(java.awt.event.MouseEvent)
+comment6.params=e
+comment6.target=void\ mousePressed(java.awt.event.MouseEvent)
+comment7.params=e
+comment7.target=void\ mousePressed(java.awt.event.MouseEvent)
+comment8.params=arg0
+comment8.target=void\ mousePressed(java.awt.event.MouseEvent)
+comment9.params=e
+comment9.target=void\ mousePressed(java.awt.event.MouseEvent)
+numComments=10
