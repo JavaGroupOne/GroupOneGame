@@ -23,17 +23,22 @@ public class Register extends JFrame
 {
 	Connection connection=null;
 	private JPanel contentPane;
-	private JTextField textFieldLnam;
-	private JTextField textFieldstu;
-	private JTextField textFieldusenam;
-	private JTextField textFieldFnam;
-	private JPasswordField textFielduseconpass;
-	private JPasswordField textFieldusepass;
-
+	private JTextField textFieldLnam,textFieldFnam,textFieldstu,textFieldusenam;
+	private JPasswordField textFielduseconpass,textFieldusepass;
+	private JLabel label,lblFirstName,lblLastName,lblStudentId,lblUsername,lblPassword,lblConfirmPassword,registerphoto;
+	private JButton btnRegister;
+	private String selectquery,insertquery,username,sql1,sql2,sql3,sql4;
+	private Statement Prepstat;
+	private PreparedStatement Prepstat2,Preps1,Preps2,Preps3,Preps4;
+	private ResultSet ResultSet;
+	
 	public Register() 
 	{
+		connection=sqliteConnection.dbConnector();//DB connector
+		
+		
+		//Registration GUI design
 		setResizable(false);
-		connection=sqliteConnection.dbConnector();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\jara\\Documents\\pic\\Register3.png"));
 		setTitle("Register");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -64,75 +69,97 @@ public class Register extends JFrame
 		contentPane.add(textFieldFnam);
 		textFieldFnam.setColumns(10);
 		
-		JLabel label = new JLabel("");
+		label = new JLabel("");
 		label.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\logo3.png"));
 		label.setBounds(158, 0, 232, 73);
 		contentPane.add(label);
 		
-		JLabel lblFirstName = new JLabel("First Name");
+		lblFirstName = new JLabel("First Name");
 		lblFirstName.setFont(new Font("Gill Sans MT", Font.PLAIN, 16));
 		lblFirstName.setForeground(Color.WHITE);
 		lblFirstName.setBounds(65, 96, 104, 31);
 		contentPane.add(lblFirstName);
 		
-		JLabel lblLastName = new JLabel("Last Name");
+		lblLastName = new JLabel("Last Name");
 		lblLastName.setFont(new Font("Gill Sans MT", Font.PLAIN, 16));
 		lblLastName.setForeground(Color.WHITE);
 		lblLastName.setBounds(65, 127, 80, 31);
 		contentPane.add(lblLastName);
 		
-		JLabel lblStudentId = new JLabel("Student ID#:");
+		lblStudentId = new JLabel("Student ID#:");
 		lblStudentId.setFont(new Font("Gill Sans MT", Font.PLAIN, 16));
 		lblStudentId.setForeground(Color.WHITE);
 		lblStudentId.setBounds(65, 152, 126, 43);
 		contentPane.add(lblStudentId);
 		
-		JLabel lblUsername = new JLabel("Username");
+		lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Gill Sans MT", Font.PLAIN, 16));
 		lblUsername.setForeground(Color.WHITE);
 		lblUsername.setBounds(65, 189, 115, 31);
 		contentPane.add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password");
+		lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Gill Sans MT", Font.PLAIN, 16));
 		lblPassword.setForeground(Color.WHITE);
 		lblPassword.setBounds(65, 221, 115, 28);
 		contentPane.add(lblPassword);
 		
-		JButton btnRegister = new JButton("Register");
+		//The registration checks the DB to ensure the usernam and password are unique before adding to the table. 
+		//Additionally, 
+
+		btnRegister = new JButton("Register");
 		btnRegister.setFont(new Font("Gill Sans MT", Font.PLAIN, 17));
 		btnRegister.addActionListener(new ActionListener() 
 		{
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				//All fields are required to be filled out logic
 				if (textFieldFnam.getText().equals("")||textFieldLnam.getText().equals("")||textFieldstu.getText().equals("")||textFieldusenam.getText().equals("")||textFieldusepass.getText().equals(""))				
 					{
 					JOptionPane.showMessageDialog(null, "Please fill out the registration form completely...");
 					return;
 					}		
 				else if (textFieldusepass.getText().equals(textFielduseconpass.getText()) )
-					{		
+					{
 						try
 						{
-						Statement Prepstat = connection.createStatement();	
-						String selectquery = "SELECT * FROM Userinfo WHERE usernam='"+textFieldusenam.getText()+"' or stuid='"+textFieldstu.getText()+"'";
-						ResultSet ResultSet = Prepstat.executeQuery(selectquery);
+						Prepstat = connection.createStatement();	//username and password DB comparison
+						selectquery = "SELECT * FROM Userinfo WHERE usernam='"+textFieldusenam.getText()+"' or stuid='"+textFieldstu.getText()+"'";
+						ResultSet = Prepstat.executeQuery(selectquery);
 						if(ResultSet.next()==true)
 							{
 							JOptionPane.showMessageDialog(null, "Username/Student ID already used. Try again...");
 							return;
 							}	
 						else
-							{
-							String insertquery = "insert into Userinfo (fname,lname,stuid,usernam,passwor) values (?,?,?,?,?)";
-							PreparedStatement Prepstat2 = connection.prepareStatement(insertquery);	
+							{//Writing to DB when the checks are passed through as successful
+							insertquery = "insert into Userinfo (fname,lname,stuid,usernam,passwor) values (?,?,?,?,?)";
+							Prepstat2 = connection.prepareStatement(insertquery);	
 							Prepstat2.setString (1, textFieldFnam.getText().trim());
 							Prepstat2.setString (2, textFieldLnam.getText().trim());
 							Prepstat2.setString (3, textFieldstu.getText().trim());
 							Prepstat2.setString (4, textFieldusenam.getText().trim());
 							Prepstat2.setString (5, textFieldusepass.getText().trim());							
 							Prepstat2.execute();	
+							
+							username = textFieldusenam.getText();
+							username.equals(String.valueOf(textFieldusenam));
+							
+							//Write zero values to the DB to enable immediate calculations
+							sql1 = "update Userinfo set avgscore='"+0+"' where usernam='"+username+"'";
+							sql2 = "update Userinfo set sciscore='"+0+"' where usernam='"+username+"'";
+							sql3 = "update Userinfo set itscore='"+0+"' where usernam='"+username+"'";
+							sql4 = "update Userinfo set mscore='"+0+"' where usernam='"+username+"'";
+							Preps1 = connection.prepareStatement(sql1);
+							Preps2 = connection.prepareStatement(sql2);
+							Preps3 = connection.prepareStatement(sql3);
+							Preps4 = connection.prepareStatement(sql4);
+							Preps1.execute();
+							Preps2.execute();
+							Preps3.execute();
+							Preps4.execute();
+							
 							JOptionPane.showMessageDialog(null, "Registration Completed!");
 							}
 						}
@@ -154,7 +181,7 @@ public class Register extends JFrame
 		btnRegister.setBounds(413, 314, 92, 21);
 		contentPane.add(btnRegister);
 		
-		JLabel lblConfirmPassword = new JLabel("Confirm Password");
+		lblConfirmPassword = new JLabel("Confirm Password");
 		lblConfirmPassword.setForeground(Color.WHITE);
 		lblConfirmPassword.setFont(new Font("Gill Sans MT", Font.PLAIN, 16));
 		lblConfirmPassword.setBounds(65, 252, 143, 28);
@@ -168,7 +195,7 @@ public class Register extends JFrame
 		textFieldusepass.setBounds(220, 227, 119, 20);
 		contentPane.add(textFieldusepass);
 		
-		JLabel registerphoto = new JLabel("");
+		registerphoto = new JLabel("");
 		registerphoto.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\Register9.png"));
 		registerphoto.setBounds(362, 165, 143, 115);
 		contentPane.add(registerphoto);
