@@ -1,18 +1,18 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JTextArea;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
+
 
 @SuppressWarnings("serial")
 public class Prizes extends JFrame 
 {
 	private JPanel contentPane;
+	private JLabel label,label_1,label_2,egypt,tv,phone;
+	private JTextArea award2Tv,award1Travel,Award3iPhone;
 	
+	
+	
+	//This GUI diaplays the potential prizes. layout and design with fetching of images
 	public Prizes() 
 	{
 		setResizable(false);
@@ -26,22 +26,22 @@ public class Prizes extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("");
+		label = new JLabel("");
 		label.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\award1.png"));
 		label.setBounds(34, 11, 59, 129);
 		contentPane.add(label);
 		
-		JLabel label_1 = new JLabel("");
+		label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\award2.png"));
 		label_1.setBounds(34, 160, 59, 121);
 		contentPane.add(label_1);
 		
-		JLabel label_2 = new JLabel("");
+		label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\award3.png"));
 		label_2.setBounds(34, 302, 59, 107);
 		contentPane.add(label_2);
 		
-		JTextArea award2Tv = new JTextArea();
+		award2Tv = new JTextArea();
 		award2Tv.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		award2Tv.setEditable(false);
 		award2Tv.setBackground(Color.BLACK);
@@ -52,7 +52,7 @@ public class Prizes extends JFrame
 		award2Tv.setBounds(115, 164, 366, 127);
 		contentPane.add(award2Tv);
 		
-		JTextArea award1Travel = new JTextArea();
+		award1Travel = new JTextArea();
 		award1Travel.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		award1Travel.setEditable(false);
 		award1Travel.setText("Win an all expense paid trip to Egypt for seven days. Valued at $6,350.00 US. Home of the ancient Pharaohs, Egypt is a dazzling destination of temples and tombs that wow all who visit. It's not all historic treasures though. The last surviving of the Seven Wonders of the Ancient World, the Pyramids of Giza are one of the world's most recognisable landmarks.");
@@ -63,7 +63,7 @@ public class Prizes extends JFrame
 		award1Travel.setBounds(115, 22, 366, 129);
 		contentPane.add(award1Travel);
 		
-		JTextArea Award3iPhone = new JTextArea();
+		Award3iPhone = new JTextArea();
 		Award3iPhone.setText("Win a Samsung Galaxy Note 9 Factory Unlocked with 6.4\" Screen and 128GB, Midnight Black Smartphone. Valued at $1,370.00 US. The Note 9 gives you a quick network connection for incredibly fast streaming and downloading, so you can do more, uninterrupted. Get a phone with more freedom.");
 		Award3iPhone.setLineWrap(true);
 		Award3iPhone.setWrapStyleWord(true);
@@ -74,17 +74,17 @@ public class Prizes extends JFrame
 		Award3iPhone.setBounds(115, 302, 366, 134);
 		contentPane.add(Award3iPhone);
 		
-		JLabel egypt = new JLabel("");
+		egypt = new JLabel("");
 		egypt.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\egypt2.jpg"));
 		egypt.setBounds(496, 17, 182, 123);
 		contentPane.add(egypt);
 		
-		JLabel tv = new JLabel("");
+		tv = new JLabel("");
 		tv.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\tv3.jpg"));
 		tv.setBounds(491, 160, 186, 107);
 		contentPane.add(tv);
 		
-		JLabel phone = new JLabel("");
+		phone = new JLabel("");
 		phone.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\phone.png"));
 		phone.setBounds(523, 292, 154, 107);
 		contentPane.add(phone);
