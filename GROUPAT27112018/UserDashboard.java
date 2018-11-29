@@ -1,38 +1,28 @@
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-//import java.awt.FlowLayout;
-import javax.swing.border.LineBorder;
-import javax.swing.UIManager;
-import java.awt.Toolkit;
-import java.awt.SystemColor;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.border.*;
+
 
 @SuppressWarnings("serial")
 public class UserDashboard extends JFrame
 {
+	Connection connection=null;
 	private JPanel contentPane;
-	public String username;
-	public String fullname1,fullname2,fullname3,score1,score2,score3;
-
-	public double mscore;
-	public double itscore;
-	public double sciscore;
-	public double avgscore;
+	private String firstquery;
+	public String fullname1,fullname2,fullname3,score1,score2,score3,username,fullname;
+	public double mscore,itscore,sciscore,avgscore,avg;
 	public int stuid;
-	private JLabel timeLabel;
-	private JLabel dateLabel;
+	private JPanel panel,panel_2,panel_3,panel_4,panel_5,panel_6;
+	private JLabel timeLabel,dateLabel,Math,informationTech,Science,logout,ReportCard,stuID,lblYouCanAlso,lblRememberYouNeed,lblusername,lblWelcomeBack,logo,exit;
+	private PreparedStatement Prepstat1;
+	private ResultSet ResultSet1;
 
+	
+	//date and time enabled
 	public void clock()
 	{
 		Thread clock = new Thread()
@@ -67,8 +57,12 @@ public class UserDashboard extends JFrame
 	}
 	
 	
-	public UserDashboard(String username, String fullname, double mscore, double itscore, double sciscore, double avgscore, int stuid)
+	
+	public UserDashboard(String username, String fullname,int stuid)//This enables the User GUI with key information that will enable informational display
 	{	
+
+		connection=sqliteConnection.dbConnector(); //Database connector
+
 		setResizable(false);
 		setForeground(Color.WHITE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\jara\\Documents\\pic\\Login.png"));
@@ -81,18 +75,19 @@ public class UserDashboard extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(UIManager.getBorder("MenuItem.border"));
 		panel.setBackground(new Color(51, 0, 0));
 		panel.setBounds(24, 256, 165, 151);
 		contentPane.add(panel);
 		
-		JLabel Math = new JLabel("");
+		//tests to be taken with reference to the username so that correct data is represented appropriately in the DB
+		Math = new JLabel(""); 
 		Math.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
 			{				
-				MathTest MathTest = new MathTest();
+				MathTest MathTest = new MathTest(username);
 				MathTest.setVisible(true);					
 			}
 		});
@@ -100,50 +95,50 @@ public class UserDashboard extends JFrame
 		Math.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\Math2.png"));
 		panel.add(Math);
 		
-		JPanel panel_2 = new JPanel();
+		panel_2 = new JPanel();
 		panel_2.setBorder(UIManager.getBorder("MenuItem.border"));
 		panel_2.setBackground(new Color(255, 165, 0));
 		panel_2.setBounds(262, 256, 169, 151);
 		contentPane.add(panel_2);
 		
-		JLabel informationTech = new JLabel("");
+		informationTech = new JLabel("");
 		informationTech.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
 			{				
-				ITtest ITtest = new ITtest();
+				ITtest ITtest = new ITtest(username);
 				ITtest.setVisible(true);				
 			}
 		});
 		informationTech.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\IT2.png"));
 		panel_2.add(informationTech);
 		
-		JPanel panel_3 = new JPanel();
+		panel_3 = new JPanel();
 		panel_3.setBorder(UIManager.getBorder("MenuItem.border"));
 		panel_3.setBackground(Color.PINK);
 		panel_3.setBounds(508, 256, 169, 151);
 		contentPane.add(panel_3);
 		
-		JLabel Science = new JLabel("");
+		Science = new JLabel("");
 		Science.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
 			{			
-				ScienceTest ScienceTest = new ScienceTest();
+				ScienceTest ScienceTest = new ScienceTest(username);
 				ScienceTest.setVisible(true);							
 			}
 		});
 		Science.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\Science4.png"));
 		panel_3.add(Science);
 		
-		JPanel panel_4 = new JPanel();
-		//FlowLayout flowLayout = (FlowLayout) panel_4.getLayout();
+		panel_4 = new JPanel();
 		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_4.setBackground(Color.BLACK);
 		panel_4.setBounds(579, 11, 58, 56);
 		contentPane.add(panel_4);
 		
-		JLabel logout = new JLabel("");
+		//logut feature enabled when the user mouse click the logout image - a prompt to confirm action is enabled
+		logout = new JLabel("");
 		logout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
@@ -164,31 +159,55 @@ public class UserDashboard extends JFrame
 		logout.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\logout.png"));
 		panel_4.add(logout);
 		
-		JPanel panel_5 = new JPanel();
+		panel_5 = new JPanel();
 		panel_5.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_5.setBackground(Color.BLACK);
 		panel_5.setBounds(530, 116, 125, 112);
 		contentPane.add(panel_5);
 		
-		JLabel ReportCard = new JLabel("");
-		ReportCard.addMouseListener(new MouseAdapter() {
+		//this code ensures that a real-time account is taken of the scores found in the DB for access via the Report Card - immediately updated when a test is completed 
+		ReportCard = new JLabel("");
+		ReportCard.addMouseListener(new MouseAdapter() 
+		{
 			@Override
 			public void mousePressed(MouseEvent arg0) 
-			{				
-				ReportCard ReportCard = new ReportCard(username,fullname,mscore,itscore,sciscore,avgscore,stuid);
-				ReportCard.setVisible(true);			
+			{
+				try
+				{		
+				firstquery = "SELECT * FROM Userinfo WHERE usernam='"+username+"'";
+				Prepstat1 = connection.prepareStatement(firstquery);
+				ResultSet1 = Prepstat1.executeQuery();	
+				mscore = Double.parseDouble(ResultSet1.getString("mscore"));
+				itscore = Double.parseDouble(ResultSet1.getString("itscore"));
+				sciscore = Double.parseDouble(ResultSet1.getString("sciscore"));
+				avg = Double.parseDouble(ResultSet1.getString("avgscore"));
+				avgscore = (avg*100.0)/100.0;		
+				
+				ResultSet1.close();
+				Prepstat1.close();
+				ReportCard ReportCard = new ReportCard(username, fullname, mscore, itscore, sciscore, avgscore, stuid);
+				ReportCard.setVisible(true);
+				
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 		});
+
+	
 		panel_5.add(ReportCard);
 		ReportCard.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\ReportCard.png"));
 		
-		JPanel panel_6 = new JPanel();
+		panel_6 = new JPanel();
 		panel_6.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_6.setBackground(Color.BLACK);
 		panel_6.setBounds(634, 17, 58, 50);
 		contentPane.add(panel_6);
 		
-		JLabel exit = new JLabel("");
+		//exit code to close the program
+		exit = new JLabel("");
 		exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
@@ -203,41 +222,44 @@ public class UserDashboard extends JFrame
 				}
 			}
 		});
+		
+		
+		//continued design layout of dashboard
 		exit.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\SmallExit.png"));
 		panel_6.add(exit);
 		
-		JLabel logo = new JLabel("");
+		logo = new JLabel("");
 		logo.setHorizontalAlignment(SwingConstants.CENTER);
 		logo.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\logo3.png"));
 		logo.setBounds(230, 0, 234, 73);
 		contentPane.add(logo);
 		
-		JLabel lblWelcomeBack = new JLabel("Welcome back!");
+		lblWelcomeBack = new JLabel("Welcome back!");
 		lblWelcomeBack.setFont(new Font("Gill Sans MT", Font.PLAIN, 22));
 		lblWelcomeBack.setForeground(SystemColor.text);
 		lblWelcomeBack.setBounds(24, 145, 309, 30);
 		contentPane.add(lblWelcomeBack);
 		
-		JLabel lblusername = new JLabel(fullname);
+		lblusername = new JLabel(fullname);
 		lblusername.setText(String.valueOf(fullname));	
 		lblusername.setForeground(SystemColor.textHighlight);
 		lblusername.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		lblusername.setBounds(24, 116, 246, 27);
 		contentPane.add(lblusername);
 		
-		JLabel lblRememberYouNeed = new JLabel("Remember, you need to pass all three subjects to qualify.");
+		lblRememberYouNeed = new JLabel("Remember, you need to pass all three subjects to qualify.");
 		lblRememberYouNeed.setForeground(Color.WHITE);
 		lblRememberYouNeed.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblRememberYouNeed.setBounds(24, 173, 478, 27);
 		contentPane.add(lblRememberYouNeed);
 		
-		JLabel lblYouCanAlso = new JLabel("You can also check your report card to track your progress.");
+		lblYouCanAlso = new JLabel("You can also check your report card to track your progress.");
 		lblYouCanAlso.setForeground(Color.WHITE);
 		lblYouCanAlso.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblYouCanAlso.setBounds(24, 196, 478, 27);
 		contentPane.add(lblYouCanAlso);
 		
-		JLabel stuID = new JLabel(String.valueOf("Student ID: " +stuid));
+		stuID = new JLabel(String.valueOf("Student ID: " +stuid));
 		stuID.setForeground(UIManager.getColor("textHighlight"));
 		stuID.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		stuID.setBounds(24, 65, 196, 40);
@@ -255,7 +277,7 @@ public class UserDashboard extends JFrame
 
 		clock();
 	}
-}
+
 	
-	
+}	
 
