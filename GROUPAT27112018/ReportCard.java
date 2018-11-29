@@ -72,15 +72,14 @@ public class ReportCard extends JFrame
 		// score refereced based on function to enable in the respective buttonsfor display 
 		mathTestScore = new JButton(String.valueOf(Math.round(((mscore)*100.0))/100.0 +"%")); 
 		
-		//mathTestScore = new JButton(String.valueOf(Math.round(mscore)+"%")); 
-		
+		 
+		// Formats buttons on JFrame
 		mathTestScore.setFont(new Font("Tahoma", Font.BOLD, 22));
 		mathTestScore.setForeground(Color.GRAY);
 		mathTestScore.setBounds(65, 291, 131, 47);
 		contentPane.add(mathTestScore);
 
 		avgScore = new JButton(String.valueOf(Math.round(((avgscore)*100.0))/100.0 + "%"));
-		//avgScore = new JButton(String.valueOf(Math.round(avgscore) + "%"));
 		avgScore.setForeground(Color.MAGENTA);
 		avgScore.setFont(new Font("Tahoma", Font.BOLD, 24));
 		avgScore.setBounds(551, 11, 141, 62);
