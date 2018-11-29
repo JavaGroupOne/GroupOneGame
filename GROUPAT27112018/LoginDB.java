@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import java.awt.Font;
@@ -21,24 +20,31 @@ import java.awt.SystemColor;
 @SuppressWarnings("serial")
 public class LoginDB extends JFrame 
 {
+	Connection connection=null;
 
 	public static final String gettextFieldUsername = null;
-
+	
+	
+	public String username,fullname;
+	public double mscore,itscore,sciscore,avgscore,avg;
+	public int stuid;
 	private JPanel contentPane;
-	Connection connection=null;
+	private JLabel label,lblUsername,lblPassword;
+	private JButton btnLogin;
 	private JTextField textFieldUsername;
 	private JPasswordField passwordField;
-	public String username,fullname;
-	public double mscore,itscore,sciscore,avgscore;
-	public int stuid;
-	public Calendar datetime;
+	private PreparedStatement Prepstat,Preps,Preps2;
+	private ResultSet ResultSet,ResultSet2;
+	private String query,fname, lname,sql,sql2;
+	private int count = 0;
 	
 	
 	public LoginDB() 
 	{
 		connection=sqliteConnection.dbConnector();
+		
+		//GUI layout and design
 		setResizable(false);
-
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\jara\\Documents\\pic\\Login.png"));
 		setTitle("User Login");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -49,30 +55,32 @@ public class LoginDB extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel label = new JLabel("");
+		label = new JLabel("");
 		label.setBounds(94, 0, 269, 73);
 		label.setIcon(new ImageIcon("C:\\Users\\jara\\Documents\\pic\\logo3.png"));
 		contentPane.add(label);
 		
-		JButton btnLogin = new JButton("Login");
+		// This listener when event confirmed will validate the user credentials and complete a check via the DB re existing scores for redundacy calculations
+		btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Gill Sans MT", Font.BOLD, 17));
 		btnLogin.setBackground(SystemColor.textHighlight);
 		btnLogin.setForeground(Color.WHITE);
-		btnLogin.addActionListener(new ActionListener() 
+		btnLogin.addActionListener(new ActionListener()  
 		{
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) 
-			{String username, fname, lname, fullname, query;
+			{String username,  fullname;
 
 				try
 				{
+					//username and password validation
 					query = "SELECT * FROM Userinfo WHERE usernam=? and passwor=? ";
-					PreparedStatement Prepstat = connection.prepareStatement(query);
+					Prepstat = connection.prepareStatement(query);
 					Prepstat.setString(1, textFieldUsername.getText());
 					Prepstat.setString(2, passwordField.getText());
-					ResultSet ResultSet = Prepstat.executeQuery();
-					
-					int count = 0;
+					ResultSet = Prepstat.executeQuery();
+					//while look to go the each row, if count equals 1, it means the username with respective password was found 
+					count = 0;
 					while(ResultSet.next())
 					{
 						count++;
@@ -80,43 +88,42 @@ public class LoginDB extends JFrame
 					}
 					if (count == 1)
 						{												
-						ResultSet ResultSet2 = Prepstat.executeQuery();
+						ResultSet2 = Prepstat.executeQuery();
 						username = textFieldUsername.getText();
 						username.equals(String.valueOf(textFieldUsername));
 						fname = ResultSet2.getString("fname");
 						lname = ResultSet2.getString("lname");
-						int stuid = ResultSet2.getInt("stuid");
-						double mscore = ResultSet2.getDouble("mscore");
-						double itscore = ResultSet2.getDouble("itscore");
-						double sciscore = ResultSet2.getDouble("sciscore");
-						double avg = (mscore + itscore + sciscore)/3.0;
-						double avgscore = (Math.round(((avg)*100.0))/100.0);
+						stuid = ResultSet2.getInt("stuid");
+						mscore = ResultSet2.getDouble("mscore");
+						itscore = ResultSet2.getDouble("itscore");
+						sciscore = ResultSet2.getDouble("sciscore");
+						avg = (mscore + itscore + sciscore)/3.0;
+						avgscore = (Math.round(((avg)*100.0))/100.0);
 						fullname = fname +" "+ lname;
 						java.sql.Date datetime = new java.sql.Date(new java.util.Date().getTime());
 
-						String sql = "update Userinfo set avgscore ='"+avgscore+"',datetime ='"+ datetime +"'where usernam ='"+username+"'";
-						//String sql2 = "update Userinfo set datetime='"+datetime+"' where usernam='"+username+"'";
-						PreparedStatement Preps = connection.prepareStatement(sql);
-						//PreparedStatement Preps2 = connection.prepareStatement(sql2);
-						Preps.executeUpdate();
-						//Preps2.executeUpdate();
-						//Prepstat2.close();
-						//Preps.execute();
-						//Preps2.execute();
-						ResultSet.close();
-						Prepstat.close();
+						sql = "update Userinfo set avgscore='"+avgscore+"' where usernam='"+username+"'";
+						sql2 = "update Userinfo set datetime='"+datetime+"' where usernam='"+username+"'";
+						Preps = connection.prepareStatement(sql);
+						Preps2 = connection.prepareStatement(sql2);
+						Preps.execute();
+						Preps2.execute();
+						//ResultSet2.close();	
 						
-						
-						UserDashboard UserDashboard = new UserDashboard(username,fullname,mscore,itscore,sciscore,avgscore,stuid);
+						UserDashboard UserDashboard = new UserDashboard(username,fullname,stuid);
 						UserDashboard.setVisible(true);
 						LoginDB.this.dispose();	
-						ResultSet.close();
-						}	
+						
+						
+						}
 						else
 						{
+							//if the count is not equal to 1 it means the data entered is not validated via the DB
 							JOptionPane.showMessageDialog(null, "Incorrect username or password. Try again...");				
 						}
-				}					
+					ResultSet.close();
+					Prepstat.close();
+				}		
 				catch(Exception e)
 				{
 					JOptionPane.showMessageDialog(null, e);
@@ -126,13 +133,13 @@ public class LoginDB extends JFrame
 		btnLogin.setBounds(257, 208, 89, 23);
 		contentPane.add(btnLogin);
 		
-		JLabel lblUsername = new JLabel("User Name:");
+		lblUsername = new JLabel("User Name:");
 		lblUsername.setFont(new Font("Gill Sans MT", Font.PLAIN, 18));
 		lblUsername.setForeground(Color.WHITE);
 		lblUsername.setBounds(68, 110, 116, 31);
 		contentPane.add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password:");
+		lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Gill Sans MT", Font.PLAIN, 18));
 		lblPassword.setForeground(Color.WHITE);
 		lblPassword.setBounds(68, 159, 77, 28);
