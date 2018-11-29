@@ -62,7 +62,7 @@ public class Status extends JFrame
                 try
                 {
                     
-                    //String query = "SELECT DISTINCT fname AS 'First Name',lname AS 'Last Name',stuid AS 'Student ID#',mscore AS 'Mathematics',itscore AS 'IT',sciscore AS 'Science',avgscore AS 'Average', datetime AS 'Last Date' FROM Userinfo ORDER BY avgscore DESC, datetime ASC LIMIT 10";
+                    
                     String query = "SELECT * FROM(SELECT DISTINCT fname AS 'First Name',lname AS 'Last Name',stuid AS 'Student ID#',mscore AS 'Mathematics',itscore AS 'IT',sciscore AS 'Science',avgscore AS 'Average', datetime AS 'Last Date' FROM Userinfo ORDER BY avgscore DESC, datetime ASC LIMIT 10)";
                     PreparedStatement prepStat = connection.prepareStatement(query);
                     ResultSet resultSet = prepStat.executeQuery();
