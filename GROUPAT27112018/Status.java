@@ -99,8 +99,7 @@ public class Status extends JFrame
         
         table = new JTable();
        
-        
-       
+               
         scrollPane.setViewportView(table);
         
         txtrTheAboveShows = new JTextArea();
